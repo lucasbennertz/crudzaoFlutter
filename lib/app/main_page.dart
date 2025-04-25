@@ -1,5 +1,6 @@
 import 'package:crud_app/app/pages/initial_page.dart';
 import 'package:crud_app/app/pages/insert_screen.dart';
+import 'package:crud_app/app/pages/read_screen.dart';
 import 'package:flutter/material.dart';
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -10,7 +11,8 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => InitialPage(),
-        '/insert': (context) => InsertScreen()
+        '/insert': (context) => InsertScreen(),
+        '/read': (context) => ReadScreen()
       },
     );
   }

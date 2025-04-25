@@ -20,18 +20,20 @@ class DatabaseHelper {
       join(path,'products_db'),
       onCreate: (db, version) async {
         await db.execute('''
+        CREATE TABLE products(
           productId INTEGER PRIMARY KEY AUTOINCREMENT,
           productName TEXT,
           productValue REAL
+          );
         ''');
       },
-      version: 1
+      version: 2
       );
   }
 
   Future<void> insertProduct(ProductModel product) async{
-    final db = await _database;
-    await db!.insert(
+    final db = await getDatabase();
+    await db.insert(
       'products', 
       {
         'productName' : product.productName,
@@ -41,8 +43,9 @@ class DatabaseHelper {
     );
   }
   
-  Future<List<Map<String,dynamic>>> readProduct() async{
-    final db = _database;
-    return await db!.query('products');
+  Future<List<ProductModel>> readProduct() async{
+    final db = await getDatabase();
+    final List<Map<String,dynamic>> result = await db.query('products');
+    return result.map((map) => ProductModel.fromMap(map)).toList();
   }
 }

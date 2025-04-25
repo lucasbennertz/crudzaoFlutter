@@ -1,6 +1,7 @@
 import 'package:crud_app/app/model/product_model.dart';
 import 'package:crud_app/app/utils/database_helper.dart';
 import 'package:crud_app/app/utils/widgets/app_bar.dart';
+import 'package:crud_app/app/utils/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 
 class ReadScreen extends StatefulWidget {
@@ -46,9 +47,7 @@ class _ReadScreenState extends State<ReadScreen> {
               itemCount: produtos.length,
               itemBuilder: (context, index) {
                 final produto = produtos[index];
-                return Center(
-                  child: Text(produto.productName),
-                );
+                return ProductCard(product: produto);
               },
               
               );

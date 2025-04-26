@@ -4,8 +4,12 @@ import 'package:crud_app/app/utils/validators/insert_validators.dart';
 import 'package:crud_app/app/utils/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class InsertScreen extends StatefulWidget {
-  const InsertScreen({super.key});
+  InsertScreen({super.key, required this.editMode, this.product});
+
+  final bool editMode;
+  ProductModel? product;
 
   @override
   State<InsertScreen> createState() => _InsertScreenState();
@@ -21,6 +25,14 @@ class _InsertScreenState extends State<InsertScreen> {
 
   final DatabaseHelper banco = DatabaseHelper();
 
+  @override
+  void initState(){
+    super.initState();
+    if(widget.editMode && widget.product != null){
+      nameController.text = widget.product!.productName;
+      valueController.text = widget.product!.productValue.toString();
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +67,7 @@ class _InsertScreenState extends State<InsertScreen> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: ElevatedButton(
                       onPressed: (){
-                        if(_formKey.currentState!.validate()){
+                        if(_formKey.currentState!.validate() && !widget.editMode){
                           String value = valueController.text;
                           value = value.replaceAll(",", ".");
                           double valueDouble = double.parse(value);
@@ -67,12 +79,25 @@ class _InsertScreenState extends State<InsertScreen> {
                             backgroundColor: Colors.black,
                             )
                           );
+                        }else if(_formKey.currentState!.validate() && widget.editMode){
+                          String value = valueController.text;
+                          value = value.replaceAll(",", ".");
+                          double valueDouble = double.parse(value);
+                          var newProduct = ProductModel(productName: nameController.text, productValue: valueDouble, productId: widget.product!.productId);
+                          banco.updateProduct(newProduct);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Produto alterado com sucesso"),
+                            duration: Duration(seconds: 5),
+                            backgroundColor: Colors.black,
+                            )
+                          );
+                          Navigator.pop(context, true);
                         }
                       },
                       style: ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(Colors.black)
                       ),
-                      child: Text("Inserir Produto", style: TextStyle(color: Colors.white),),
+                      child: Text(widget.editMode ? "Salvar alterações" : "Inserir Produto", style: TextStyle(color: Colors.white),),
                       ),
                   )
                 ],

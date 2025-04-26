@@ -9,9 +9,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: "/",
       routes: {
         '/': (context) => InitialPage(),
-        '/insert': (context) => InsertScreen(),
+        '/insert': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments as Map;
+          return InsertScreen(editMode: args['editMode'], product: args['product'],);
+          },
         '/read': (context) => ReadScreen()
       },
     );

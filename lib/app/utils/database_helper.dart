@@ -48,4 +48,18 @@ class DatabaseHelper {
     final List<Map<String,dynamic>> result = await db.query('products');
     return result.map((map) => ProductModel.fromMap(map)).toList();
   }
+
+  Future<void> updateProduct(ProductModel product) async{
+    final db = await getDatabase();
+    await db.update(
+      'products',
+    {
+      'productName' : product.productName,
+      'productValue' : product.productValue
+    },
+    where: 'productId = ?',
+    whereArgs: [product.productId],
+    conflictAlgorithm: ConflictAlgorithm.replace    
+    );
+  }
 }

@@ -2,9 +2,10 @@ import 'package:crud_app/app/model/product_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.product});
+  ProductCard({super.key, required this.product, required this.carregarProdutos});
 
   final ProductModel product;
+  final Function carregarProdutos;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -34,7 +35,15 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: (){},
+                  onPressed: () async{
+                    final result = await Navigator.of(context).pushNamed("/insert", arguments: {
+                        'editMode' : true,
+                        'product' : product
+                    });
+                    if(result == true){
+                      carregarProdutos();
+                    }
+                  },
                   icon: Icon(Icons.edit),
                   color: Colors.blue,
                   ),

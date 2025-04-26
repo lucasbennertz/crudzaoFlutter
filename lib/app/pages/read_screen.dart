@@ -14,7 +14,7 @@ class ReadScreen extends StatefulWidget {
 class _ReadScreenState extends State<ReadScreen> {
   final DatabaseHelper banco = DatabaseHelper();
 
-  late Future<List<ProductModel>> productsList;
+late Future<List<ProductModel>> productsList = Future.value([]);
   @override
   void initState(){
     super.initState();
@@ -33,7 +33,7 @@ class _ReadScreenState extends State<ReadScreen> {
     return Scaffold(
       appBar: MyAppBar(),
       body: FutureBuilder<List<ProductModel>>(
-        future: banco.readProduct(),
+        future: productsList,
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting){
             return const Center(child: CircularProgressIndicator());
@@ -47,7 +47,7 @@ class _ReadScreenState extends State<ReadScreen> {
               itemCount: produtos.length,
               itemBuilder: (context, index) {
                 final produto = produtos[index];
-                return ProductCard(product: produto);
+                return ProductCard(product: produto, carregarProdutos: _loadProducts,);
               },
               
               );

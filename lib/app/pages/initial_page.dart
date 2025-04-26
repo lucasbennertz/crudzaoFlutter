@@ -18,7 +18,8 @@ class InitialPage extends StatelessWidget {
             child: Column(
               children: [
                 ButtonInitialScreen(buttonText: "Insert", caminhoTela: "/insert",),
-                ButtonInitialScreen(buttonText: "Read, Update and Delete", caminhoTela: "/read")
+                ButtonInitialScreen(buttonText: "Read, Update and Delete", caminhoTela: "/read"),
+                ButtonInitialScreen(buttonText: "Buscar por só um item", caminhoTela: '/readOnlyOne')
               ],
             ),
           )

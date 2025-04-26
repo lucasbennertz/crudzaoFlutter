@@ -70,4 +70,13 @@ class DatabaseHelper {
       whereArgs: [product.productId]
     );
   }
+  Future<ProductModel> readOneProduct(String nomeProduto) async{
+    List<ProductModel> produtos = await readProduct();
+  return produtos.firstWhere(
+    (prod) => prod.productName.contains(nomeProduto),
+    orElse: () {
+    throw Exception("Produto não encontrado");
+    }
+  );
+  }
 }

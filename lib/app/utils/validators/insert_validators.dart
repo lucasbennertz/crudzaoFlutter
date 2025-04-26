@@ -3,7 +3,7 @@ class InsertValidators {
     if(nome == null){
       return "O nome não pode ser nulo";
     }else if(nome.length <= 3){
-      return "O nome deve ser maior que 5 letras";
+      return "O nome deve ser maior que 3 letras";
     }else{
       return null;
     }

@@ -2,10 +2,11 @@ import 'package:crud_app/app/model/product_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  ProductCard({super.key, required this.product, required this.carregarProdutos});
+  ProductCard({super.key, required this.product, required this.carregarProdutos, required this.deletarProdutos});
 
   final ProductModel product;
   final Function carregarProdutos;
+  final Function deletarProdutos;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -48,7 +49,10 @@ class ProductCard extends StatelessWidget {
                   color: Colors.blue,
                   ),
                 IconButton(
-                  onPressed: (){}, 
+                  onPressed: ()async{
+                    deletarProdutos();
+                    carregarProdutos();
+                  }, 
                   icon: Icon(Icons.delete),
                   color: Colors.red,
                   )

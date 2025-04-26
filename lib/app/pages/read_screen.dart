@@ -47,7 +47,10 @@ late Future<List<ProductModel>> productsList = Future.value([]);
               itemCount: produtos.length,
               itemBuilder: (context, index) {
                 final produto = produtos[index];
-                return ProductCard(product: produto, carregarProdutos: _loadProducts,);
+                return ProductCard(product: produto, carregarProdutos: _loadProducts, deletarProdutos: () async {
+                  await banco.deleteProduct(produto);
+                  print("peoduto deletado");
+                });
               },
               
               );

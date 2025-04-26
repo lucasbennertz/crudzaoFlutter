@@ -62,4 +62,12 @@ class DatabaseHelper {
     conflictAlgorithm: ConflictAlgorithm.replace    
     );
   }
+  Future<void> deleteProduct(ProductModel product) async{
+    final db = await getDatabase();
+    await db.delete(
+      'products',
+      where: 'productId = ?',
+      whereArgs: [product.productId]
+    );
+  }
 }

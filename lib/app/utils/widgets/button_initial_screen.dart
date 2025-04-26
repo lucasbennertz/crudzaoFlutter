@@ -11,7 +11,9 @@ class ButtonInitialScreen extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.8,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(caminhoTela);
+          Navigator.of(context).pushNamed(caminhoTela, arguments: {
+            'editMode': false
+          });
         },
         style: ButtonStyle(
           alignment: Alignment.center,
